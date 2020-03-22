@@ -18,6 +18,8 @@ struct passage {
 	bool death;
 	passage* one;
 	passage* two;
+	string cause_of_death;
+	string death_color;
 };
 
 int main()
@@ -56,36 +58,50 @@ int main()
 	stay_inside = { 13, 22, false, p_lock_door, p_opendoor_nofirewood};
 	lock_door = { 25, 33, false, p_cellar, p_outsiderun};
 	cellar = { 36, 44, false, p_coffin, p_icebox};
-	coffin = { 46, 54, true };
-	icebox = { 56, 59, true };
+	coffin = { 46, 54, true, nullptr, nullptr, "PERISHED!", "32"};
+	icebox = { 56, 59, true, nullptr, nullptr, "ICED!" , "36"};
 	outside_norun = { 60, 69, false, p_firewood, p_follow_smoke };
 	outside_run = { 70, 78, false, p_follow_smoke, p_lake_nocult };
 	firewood = { 80, 89, false, p_lock_door, p_opendoor_firewood };
-	opendoor_firewood = { 90, 101, true };
-	opendoor_nofirewood = { 102, 113, true };
+	opendoor_firewood = { 90, 101, true, nullptr, nullptr, "INCINERATED!", "31"};
+	opendoor_nofirewood = { 102, 113, true, nullptr, nullptr, "SWARMED!", "35"};
 	follow_smoke = { 114, 129, false, p_join_them, p_lake_cult };
-	join_them = { 130, 141, true };
+	join_them = { 130, 141, true, nullptr, nullptr, "SACRIFICED!", "37" };
 	lake_nocult = { 143, 157, false, p_old_man, p_swim };
 	lake_cult = { 142, 157, false, p_old_man, p_swim };
-	old_man = { 158, 169, true };
-	swim = { 170, 173, true };
+	old_man = { 158, 166, true, nullptr, nullptr, "UNKNOWN FATE.", "30" };
+	swim = { 168, 171, true, nullptr, nullptr, "DROWNED!", "34"};
 	
 	bool finished = false;
 	passage current = house;
 	int next = 0;
 
+	cout << "\033[1;31mhouse in the woods\033[0m\n" << endl;
+
 	if (myfile.is_open()) {
 
 		while (!finished)
 		{
-			read_passage(myfile, current.start, current.end);
 			finished = current.death;
+			read_passage(myfile, current.start, current.end);
 
 			if (finished) {
-				break;
+				cout << "\033[1;" << current.death_color << "m" << current.cause_of_death << "\033[0m\n" << endl;
+				cout << "Would you like to play again? Enter [1] for yes, [2] for no: ";
+				cin >> next;
+				cout << endl;
+
+				if (next == 1) {
+					finished = false;
+					current = house;
+					read_passage(myfile, current.start, current.end);
+				}
+				else {
+					break;
+				}
 			}
 
-			cout << "Enter [1] or [2]: ";
+			cout << endl << "Enter [1] or [2]: ";
 			cin >> next;
 			cout << endl;
 
@@ -96,10 +112,10 @@ int main()
 				current = *current.two;
 			}
 			else {
-				cout << "Invalid." << endl;
+				cout << "Please enter either [1] or [2]." << endl;
 			}
 		}
-		cin.get();
+		myfile.close();
 	}
 }
 
