@@ -58,8 +58,8 @@ int main()
 	stay_inside = { 13, 22, false, p_lock_door, p_opendoor_nofirewood};
 	lock_door = { 25, 33, false, p_cellar, p_outsiderun};
 	cellar = { 36, 44, false, p_coffin, p_icebox};
-	coffin = { 46, 54, true, nullptr, nullptr, "PERISHED!", "32"};
-	icebox = { 56, 59, true, nullptr, nullptr, "ICED!" , "36"};
+	coffin = { 45, 54, true, nullptr, nullptr, "PERISHED!", "32"};
+	icebox = { 55, 59, true, nullptr, nullptr, "ICED!" , "36"};
 	outside_norun = { 60, 69, false, p_firewood, p_follow_smoke };
 	outside_run = { 70, 78, false, p_follow_smoke, p_lake_nocult };
 	firewood = { 80, 89, false, p_lock_door, p_opendoor_firewood };
@@ -69,7 +69,7 @@ int main()
 	join_them = { 130, 141, true, nullptr, nullptr, "SACRIFICED!", "37" };
 	lake_nocult = { 143, 157, false, p_old_man, p_swim };
 	lake_cult = { 142, 157, false, p_old_man, p_swim };
-	old_man = { 158, 166, true, nullptr, nullptr, "UNKNOWN FATE.", "30" };
+	old_man = { 158, 167, true, nullptr, nullptr, "UNKNOWN FATE.", "30" };
 	swim = { 168, 171, true, nullptr, nullptr, "DROWNED!", "34"};
 	
 	bool finished = false;
